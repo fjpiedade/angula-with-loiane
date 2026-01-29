@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 @Component({
   selector: 'app-hello',
@@ -16,18 +16,29 @@ export class Hello {
   }
 
   protected count = signal(0);
+  protected doubleCount = computed(() => this.count() * 2);
+  // protected doubleCount = computed(() => {
+  //   console.log('the DoubleCount by compute signal called ...');
+  //   this.count() * 2
+  // });
 
-  increaseCounter() {
+
+  // protected getDoubleCount() {
+  //   console.log('getDoubleCount called ...');
+  //   return this.count() * 2;
+  // }
+
+  protected increaseCounter() {
     //count=count+1;
     this.count.update(value => value + 1);
   }
 
-  decreaseCounter() {
+  protected decreaseCounter() {
     //count=count-1;
     this.count.update(value => value - 1);
   }
 
-  resetCounter() {
+  protected resetCounter() {
     this.count.set(0);
   }
 
