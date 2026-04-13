@@ -10,8 +10,19 @@
 </div> -->
 
 <div class="products-container">
-  <p>Total Products in the list: {{products().length}}</p>
+  <!-- <p>Total Products in the list: {{products().length}}</p> -->
 
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search Products</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="e.g headphones" />
+    <!-- old version
+      <input matInput placeholder="e.g headphones"
+    [ngModel]="searchTerm()" (ngModelChange)="searchTerm"/> -->
+  </mat-form-field>
+
+  <p class="search-preview">
+    Search Term: {{searchTerm()}}
+  </p>
   <div class="products-grid">
     @for (product of products(); track product.id) {
     <app-products-card [product]="product" addButtonLabel="View Details" />
