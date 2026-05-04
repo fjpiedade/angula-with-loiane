@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ProductsCard } from '../products-card/products-card';
 import { Product } from '../product';
 //NgForOf import { NgForOf } from "../../../../node_modules/@angular/common/types/_common_module-chunk";
@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CartService } from '../../cart/cart-service';
 
 @Component({
   selector: 'app-products-grid',
@@ -14,6 +15,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrl: './products-grid.scss',
 })
 export class ProductsGrid {
+
+  // old way to inject object in angular
+  // private cartService!: CartService;
+  // ProductsGrid(cartService: CartService) {
+  //   this.cartService = cartService;
+  // }
+
+  // modern way to inject, make dependence injection
+  private readonly cartService = inject(CartService);
+
   protected readonly searchTerm = signal('');
 
   protected readonly products = signal<Product[]>([
@@ -58,6 +69,7 @@ export class ProductsGrid {
   }
 
   protected onAddToCart(product: Product) {
-    console.log('Added to Cart: ', product.name);
+    // console.log('Added to Cart: ', product.name);
+    this.cartService.addToCart(product);
   }
 }
